@@ -41,6 +41,7 @@ import android.os.Environment;
 import android.os.Process;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -164,22 +165,30 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
             values.put(MediaStore.Images.ImageColumns.DATE_MODIFIED, mImageTime);
             values.put(MediaStore.Images.ImageColumns.MIME_TYPE, "image/png");
             Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            
+            Log.d("SCREENSHOT", "Media Location: " + MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Log.d("SCREENSHOT", "Media Uri: " + uri.toString());
 
             OutputStream out = resolver.openOutputStream(uri);
             image.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
+            
+            Log.d("SCREENSHOT", "File saved");
 
             // update file size in the database
             values.clear();
             values.put(MediaStore.Images.ImageColumns.SIZE, new File(mImageFilePath).length());
             resolver.update(uri, values, null, null);
+            
+            Log.d("SCREENSHOT", "File size updated");
 
             params[0].imageUri = uri;
             params[0].result = 0;
         } catch (Exception e) {
             // IOException/UnsupportedOperationException may be thrown if external storage is not
             // mounted
+        	Log.d("SCREENSHOT", e.toString());
             params[0].result = 1;
         }
 
@@ -360,6 +369,7 @@ class GlobalScreenshot {
         }
 
         // Take the screenshot
+        
         mScreenBitmap = Surface.screenshot((int) dims[0], (int) dims[1]);
         if (mScreenBitmap == null) {
             notifyScreenshotError(mContext, mNotificationManager);
