@@ -4,16 +4,17 @@ import android.content.Context;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.SystemProperties;
+import android.util.Log;
 import static com.android.internal.telephony.RILConstants.*;
 
 public class SamsungHCRIL extends RIL implements CommandsInterface {
 
-    private boolean mSignalbarCount = SystemProperties.getInt("ro.telephony.sends_barcount", 0) == 1 ? true : false;
+    private boolean mSignalbarCount = SystemProperties.getInt("ro.telephony.sends_barcount", 0) == 1 ? true : false;        
     
     public SamsungHCRIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
     }
-
+    static final String LOG_TAG = "RILJ";
     //SAMSUNG SGS STATES
     static final int RIL_UNSOL_STK_SEND_SMS_RESULT = 11002;
     static final int RIL_UNSOL_O2_HOME_ZONE_INFO = 11007;
@@ -61,9 +62,9 @@ public class SamsungHCRIL extends RIL implements CommandsInterface {
                 response[i] = p.readInt();
             }
         }
-
+        
         /* Matching Samsung signal strength to asu.
-Method taken from Samsungs cdma/gsmSignalStateTracker */
+		   Method taken from Samsungs cdma/gsmSignalStateTracker */
         if(mSignalbarCount)
         {
             //Samsung sends the count of bars that should be displayed instead of
