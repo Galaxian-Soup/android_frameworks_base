@@ -15,8 +15,11 @@ public class SamsungHCRIL extends RIL implements CommandsInterface {
         super(context, networkMode, cdmaSubscription);
     }
     static final String LOG_TAG = "RILJ";
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> Cleaned-up SumsungHCRIL
     //SAMSUNG SGS STATES
     static final int RIL_UNSOL_STK_SEND_SMS_RESULT = 11002;
     static final int RIL_UNSOL_O2_HOME_ZONE_INFO = 11007;
@@ -65,11 +68,10 @@ public class SamsungHCRIL extends RIL implements CommandsInterface {
             }
         }
         
-        /* Matching Samsung signal strength to asu.
-		   Method taken from Samsungs cdma/gsmSignalStateTracker */
 
         /* Matching Samsung signal strength to asu.
             Method taken from Samsungs cdma/gsmSignalStateTracker */
+        
         if(mSignalbarCount)
         {
             //Samsung sends the count of bars that should be displayed instead of
