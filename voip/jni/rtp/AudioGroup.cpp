@@ -913,7 +913,7 @@ bool AudioGroup::DeviceThread::threadLoop()
 
         if (mode != MUTED) {
             if (echo != NULL) {
-                LOGV("echo->run()");
+                ALOGV("echo->run()");
                 echo->run(output, input);
             }
             send(deviceSocket, input, sizeof(input), MSG_DONTWAIT);

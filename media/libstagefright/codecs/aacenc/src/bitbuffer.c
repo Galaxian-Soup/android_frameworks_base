@@ -138,7 +138,7 @@ Word16 GetBitsAvail(HANDLE_BIT_BUF hBitBuf)
 *
 *****************************************************************************/
 Word16 WriteBits(HANDLE_BIT_BUF hBitBuf,
-                 Word32 writeValue,
+                 UWord32 writeValue,
                  Word16 noBitsToWrite)
 {
   Word16 wBitPos;
@@ -152,6 +152,7 @@ Word16 WriteBits(HANDLE_BIT_BUF hBitBuf,
 
   wBitPos = hBitBuf->wBitPos;
   wBitPos += noBitsToWrite;
+  writeValue &= ~(0xffffffff << noBitsToWrite); // Mask out everything except the lowest noBitsToWrite bits
   writeValue <<= 32 - wBitPos;
   writeValue |= hBitBuf->cache;
 
