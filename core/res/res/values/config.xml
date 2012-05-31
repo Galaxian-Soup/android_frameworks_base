@@ -770,4 +770,6 @@
          [bootmode]:[original USB mode]:[USB mode used]-->
     <integer-array translatable="false" name="config_oemUsbModeOverride">
     </integer-array>
+    <bool name="config_enableCrtAnimations">false</bool>
+    <bool name="config_hasDockBattery">false</bool>
 </resources>
